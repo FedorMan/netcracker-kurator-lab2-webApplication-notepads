@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - notepadmanager@localhost" uuid="92dee9cb-cada-4d7c-afa7-590787e52abb">
+    <database-info product="MySQL" version="5.6.25-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="notepadmanager"/>
+    <table name="notepads" schema="" catalog="notepadmanager" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="id_user" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
+      <column name="time_create" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="notepads_ibfk_1" columns="id_user" ref-table="users" ref-schema="" ref-catalog="notepadmanager" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="recording_ibfk_1" table="recording" schema="" catalog="notepadmanager" columns="id_notepad"/>
+    </table>
+    <table name="recording" schema="" catalog="notepadmanager" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="id_notepad" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
+      <column name="text" sqlType="VARCHAR" precision="3000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="time_create" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="recording_ibfk_1" columns="id_notepad" ref-table="notepads" ref-schema="" ref-catalog="notepadmanager" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="saved_files_ibfk_1" table="saved_files" schema="" catalog="notepadmanager" columns="id_record"/>
+    </table>
+    <table name="saved_files" schema="" catalog="notepadmanager" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="id_record" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="path_to_file" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
+      <column name="time_create" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <column name="type" sqlType="ENUM" precision="7" scale="0" nullable="true" jdbcType="1" def="J2ZpbGUn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="saved_files_ibfk_1" columns="id_record" ref-table="recording" ref-schema="" ref-catalog="notepadmanager" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+    </table>
+    <table name="users" schema="" catalog="notepadmanager" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="login" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="70" scale="0" nullable="true" jdbcType="12"/>
+      <column name="time_create" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="notepads_ibfk_1" table="notepads" schema="" catalog="notepadmanager" columns="id_user"/>
+      <index name="login" unique="true" columns="login"/>
+    </table>
+  </data-source>
+</component>
