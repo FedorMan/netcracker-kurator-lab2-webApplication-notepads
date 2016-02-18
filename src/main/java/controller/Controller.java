@@ -65,13 +65,13 @@ public class Controller {
         return ids;
     }
 
-    public LinkedList<Essence> listAll(String query,Class c) {
+    public LinkedList<Essence> listOnQuery(String query, Class c) {
         Session session = getSessionFactory().openSession();
         session.beginTransaction();
         LinkedList<Essence> listAll = new LinkedList();
         LinkedList<Integer> ids = getIds(query);
         for (int i = 0; i < ids.size(); i++) {
-            listAll.add((Essence) session.load(c, ids.get(i)));
+            listAll.add((Essence) session.get(c, ids.get(i)));
         }
         return listAll;
     }

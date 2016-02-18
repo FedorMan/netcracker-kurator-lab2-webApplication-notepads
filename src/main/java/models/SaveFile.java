@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "saved_files")
-public class SaveFile extends Essence{
+public class SaveFile implements Essence{
     @Id
     @Column(name = "id")
     @GeneratedValue()

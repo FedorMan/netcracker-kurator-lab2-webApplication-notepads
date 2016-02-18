@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name="recording")
-public class Record extends Essence{
+public class Record implements Essence{
     @Id
     @Column(name = "id")
     @GeneratedValue()

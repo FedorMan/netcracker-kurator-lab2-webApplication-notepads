@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "users")
-public class User extends Essence {
+public class User implements Essence {
     @Id
     @Column(name = "id")
     @GeneratedValue()
