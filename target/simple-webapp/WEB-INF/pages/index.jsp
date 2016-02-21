@@ -1,8 +1,8 @@
 <html>
 <head>
-    <title>Index</title>
+    <title>index</title>
 </head>
 <body>
-First page
+
 </body>
 </html>
