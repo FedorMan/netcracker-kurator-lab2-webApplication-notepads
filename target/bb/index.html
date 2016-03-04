@@ -1,0 +1,39 @@
+<html>
+<head>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+
+    <script>
+
+        var users = angular.module('users',[]);
+
+        users.ru.bk.leontev.fedor.webController('UserCtrl', function ($scope, $http){
+
+            $http.get('/rest/w/getall/').success(function(data) {
+
+                $scope.user = data;
+
+            });
+
+        });
+
+    </script>
+
+</head>
+<body>
+<div>
+    <table>
+
+        <tr ng-repeat="user in users | orderBy: 'code' ">
+
+            <td>{{user.login}}</td>
+
+
+        </tr>
+
+    </table>
+
+</div>
+</body>
+</html>
+

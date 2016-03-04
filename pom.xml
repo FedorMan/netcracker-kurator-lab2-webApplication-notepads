@@ -8,55 +8,67 @@
     <artifactId>samgtu</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
+    <name>bb</name>
+    <url>http://maven.apache.org</url>
+    <build>
+        <finalName>bb</finalName>
+        <!-- ... -->
+    </build>
 
+        <properties>
+            <hibernate.version>4.1.11.Final</hibernate.version>
+            <mysql.version>5.1.24</mysql.version>
+        </properties>
 
-    <properties>
-        <hibernate.version>4.1.11.Final</hibernate.version>
-        <mysql.version>5.1.24</mysql.version>
-    </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
+
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
+
         </dependency>
 
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
             <version>1.6.1</version>
+
         </dependency>
 
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.1.1</version>
+
         </dependency>
 
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>3.2.1</version>
+
         </dependency>
 
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
             <version>2.2</version>
+
         </dependency>
 
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
             <version>1.1</version>
+
         </dependency>
 
         <dependency>
@@ -66,59 +78,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javaee</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>5</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>jsr311-api</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-
-
-
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>1.19</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-server</artifactId>
-            <version>1.19</version>
-            <scope>provided</scope>
+            <version>1.8</version>
         </dependency>
 
         <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-            <version>1.19</version>
-            <scope>provided</scope>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>1.7.1</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-servlet</artifactId>
-            <version>1.19</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angularjs</artifactId>
-            <version>1.5.0</version>
-            <scope>provided
-            </scope>
-        </dependency>
-
     </dependencies>
 
 

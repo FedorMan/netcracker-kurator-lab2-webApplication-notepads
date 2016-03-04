@@ -7,9 +7,9 @@
 
         var users = angular.module('users',[]);
 
-        users.ru.bk.leontev.fedor.controller('UserCtrl', function ($scope, $http){
+        users.ru.bk.leontev.fedor.webController('UserCtrl', function ($scope, $http){
 
-            $http.get('/webController/users/').success(function(data) {
+            $http.get('/rest/w/getall/').success(function(data) {
 
                 $scope.user = data;
 
@@ -26,7 +26,7 @@
 
         <tr ng-repeat="user in users | orderBy: 'code' ">
 
-            <td>{{user.id}}</td>
+            <td>{{user.login}}</td>
 
 
         </tr>
