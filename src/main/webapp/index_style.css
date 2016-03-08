@@ -1,0 +1,152 @@
+/*Верхняя панель*/
+.brand_nav{
+	margin-left:12px;
+}
+.search_con{
+    margin-top: 8px;
+}
+.btn_exit{
+	margin-top: 8px;
+}
+.usr_nav{
+	margin-left:351px;
+	margin-top: 15px;
+}
+.btn_exit{
+	margin-left:5px;
+	margin-top: 0px;
+	width:10%;
+}
+
+/*Три горизонтальных блока*/
+.notepads{
+	background-color:#FFFFFF;
+	height: 89%;
+}
+.records{
+	background-color:#FFFFFF;
+	height: 89%;
+}
+.contents{
+	background-color:#FFFFFF;
+	height: 89%;
+}
+
+/*Кнопки в блоках*/
+.add_but_not{
+	position:absolute;
+	width:40%;
+	top:530px;
+	margin-left:14px;
+}
+.del_but_not{
+	position:absolute;
+	width:40%;
+	top:530px;
+	left:130px;
+}
+.del_but_rec{
+	position:absolute;
+	width:40%;
+	top:530px;
+	left:130px;
+}
+.cl_but_con{
+	position:absolute;
+	top:530px;
+	left:10px;
+	width:48%;
+}
+.save_but_con{
+	position:absolute;
+	top:530px;
+	left:250px;
+	width:45%;
+}
+.btn_edit{
+	position:absolute;
+	top:530px;
+	width:94%;
+}
+
+/*прочие элементы*/
+textarea {
+	resize: none;
+	border-radius:10px;
+}
+.textarea1{
+	height:300px;
+}
+.textarea2{
+	height:150px;
+	width:250px;
+}
+/*поле добавить блокнот*/
+.add_notepad_label{
+	position:relative;
+	padding-left:30%;
+	padding-top:9%;
+}
+.add_record_label{
+	position:relative;
+	padding-left:30%;
+	padding-top:9%;
+}
+
+.add_notepad_label_inp{
+	position:relative;
+	top:9px;
+}
+
+.add_record_label_inp{
+	position:relative;
+	top:9px;
+}
+
+.add_textar_notepad{
+	position:relative;
+	top:19px;
+}
+
+.add_textar_record{
+	position:relative;
+	top:19px;
+}
+
+.modal-content{
+	height:300px;
+}
+.add_notepad_but{
+	position:relative;
+	top:29px;
+	left:15px;
+	width:44%;
+}
+.del_notepad_but{
+	position:relative;
+	top:29px;
+	left:16px;
+	width:44%;
+}
+
+.add_record_but{
+	position:relative;
+	top:29px;
+	left:15px;
+	width:44%;
+}
+.del_record_but{
+	position:relative;
+	top:29px;
+	left:16px;
+	width:44%;
+}
+.desc_lable{
+	font-size:13px;
+}
+.record_h{
+	height:43px;
+}
+.notepad_h{
+	height:67px;
+}

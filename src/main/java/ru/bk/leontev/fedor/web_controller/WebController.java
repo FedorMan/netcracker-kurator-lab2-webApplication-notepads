@@ -1,38 +1,37 @@
-package ru.bk.leontev.fedor.webController;
+package ru.bk.leontev.fedor.web_controller;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.LinkedList;
 import com.google.gson.Gson;
 import ru.bk.leontev.fedor.controller.Controller;
 import ru.bk.leontev.fedor.models.Entity;
+import ru.bk.leontev.fedor.models.Notepad;
 import ru.bk.leontev.fedor.models.User;
 
 @Path(value="/w")
 public class WebController {
     Controller controller=new Controller();
     @GET
-    @Path(value="/getall")
+    @Path(value="/getAllUsers")
     @Produces(MediaType.APPLICATION_JSON)
     public String listAllUsers() {
         Gson gson = new Gson();
-        LinkedList<User> message=new LinkedList<User>();
         LinkedList<Entity> entites=controller.listOnQuery("select * from users", User.class);
-        for (int i = 0; i <entites.size(); i++) {
-            message.add((User)entites.get(i));
-        }
-        String json = gson.toJson(message);
+        String json = gson.toJson(entites);
         return json;
     }
     @GET
-    @Path(value="/get")
+    @Path(value="/getNotepads/{idUser}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String hello() {
+    public String getNotepades(@PathParam("idUser") int idUser) {
         Gson gson = new Gson();
-        User user=new User("fbdb","fdb");
-        String json = gson.toJson(user);
+        Controller controller=new Controller();
+        LinkedList<Entity> notepads=controller.listOnQuery("select * from notepads where id_user="+idUser, Notepad.class);
+        String json = gson.toJson(notepads);
         return json;
     }
 }
