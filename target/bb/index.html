@@ -25,10 +25,25 @@
                 $scope.notepads = response.data;
             });
         });
+        app.controller('ExampleController',  function ($scope, $http) {
+            $scope.master = {};
+            $scope.save = function() {
+                $scope.master = angular.copy($scope.notepad);
+                //$http.post("/saveNotepad", $scope.master);
+                $http.post("/rest/w/saveNotepad", $scope.master).success(function(master, status) {
+                    $scope.hello = $scope.master;
+                });
+
+            };
+
+        });
     </script>
 
+
+
+
 </head>
-<body>
+<body ng-app="myApp">
 <nav class="navbar navbar-default">
     <div class="navbar-header">
         <a class="navbar-brand brand_nav" href="#">Notepads</a>
@@ -50,18 +65,21 @@
 
 <div class="modal fade" id="smallModal_notepad" tabindex="-1" role="dialog" aria-labelledby="smallModal_notepad"
      aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <h4 class="modal-title add_notepad_label">Add Notepad</h4>
 
-            <div class="col-xs-12">
-                <input class="form-control add_notepad_label_inp" type="text">
-                <textarea class="form-control add_textar_notepad" maxlength="100" rows="6" cols="40"></textarea>
-            </div>
-            <div>
-                <button type="button" class="btn btn-primary add_notepad_but"></span>Save</button>
-                <button type="button" class="btn btn-default del_notepad_but" data-dismiss="modal">Cancel</button>
-            </div>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content"  ng-controller="ExampleController">
+            <h4 class="modal-title add_notepad_label">Add Notepad</h4>
+                <form novalidate  class="simple-form">
+                    <div class="col-xs-12">
+                        <input class="form-control add_notepad_label_inp" type="text" ng-model="notepad.name">
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary add_notepad_but" ng-click="save()"></span>Save</button>
+                        <button type="button" class="btn btn-default del_notepad_but" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            <pre>user = {{notepad | json}}</pre>
+            <pre>master = {{master | json}}</pre>
         </div>
     </div>
 </div>
@@ -91,30 +109,18 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 notepads">
-            <div class="list-group" ng-app="myApp" ng-controller="customersCtrl">
-
+            <div class="list-group" ng-controller="customersCtrl">
                 <a href = "#" class = "list-group-item  notepad_h active">
                     <h4 class = "list-group-item-heading ">
                         Notepads:
                     </h4>
                 </a>
-                <a href = "{{x.id}}" class="list-group-item notepad_h" ng-repeat="x in notepads">
+                <a href = "#" class="list-group-item notepad_h" ng-repeat="x in notepads">
                     <h4 class = "list-group-item-heading">
                         {{x.name}}
 
                     </h4>
                 </a>
-                <!--
-                <ul>
-                    <li ng-repeat="x in notepads">
-                        <a href=# class="list-group-item  notepad_h active">
-                            <h4 >
-                                {{x.name}}
-                            </h4>
-                        </a>
-                    </li>
-                </ul>
-                -->
             </div>
 
             <button data-toggle="modal" data-target="#smallModal_notepad" type="button"
