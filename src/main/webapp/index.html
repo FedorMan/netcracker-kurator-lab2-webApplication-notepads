@@ -21,7 +21,7 @@
     <script>
         var app = angular.module('myApp', []);
         app.controller('customersCtrl', function ($scope, $http) {
-            $http.get("/rest/w/getNotepads/22").then(function (response) {
+            $http.get("/rest/w/getNotepads").then(function (response) {
                 $scope.notepads = response.data;
             });
         });
@@ -78,8 +78,6 @@
                         <button type="button" class="btn btn-default del_notepad_but" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
-            <pre>user = {{notepad | json}}</pre>
-            <pre>master = {{master | json}}</pre>
         </div>
     </div>
 </div>
