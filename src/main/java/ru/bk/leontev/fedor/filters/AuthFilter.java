@@ -19,21 +19,14 @@ public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         System.out.println("Incert in filter");
-        //reques
         HttpSession session = ((HttpServletRequest) request).getSession(false);
-        //if ((((HttpServletRequest) request).getRequestURI()).startsWith("/login/")) {
-
             if (session == null) {
-                //chain.doFilter(request, response);
                 System.out.println("Session is null");
                 String loginURI = ((HttpServletRequest) request).getContextPath() + "/login/login.html";
                 ((HttpServletResponse) response).sendRedirect(loginURI);
             } else {
                 chain.doFilter(request, response);
-                //System.out.println("Session is not null");
-                //((HttpServletResponse) response).sendRedirect("/index.html");
             }
-        //}
         System.out.println("Output from filter");
     }
 

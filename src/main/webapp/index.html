@@ -1,4 +1,3 @@
-
 <html>
 <head>
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -20,26 +19,37 @@
 
     <script>
         var app = angular.module('myApp', []);
-        app.controller('customersCtrl', function ($scope, $http) {
-            $http.get("/rest/w/getNotepads").then(function (response) {
-                $scope.notepads = response.data;
-            });
+        app.controller('GetDataController', function ($scope, $http) {
+            app.loadNotepads = function () {
+                $http.get("/rest/w/getNotepads").then(function (response) {
+                    $scope.notepads = response.data;
+                });
+            }
+            $scope.setIdNotepad = function (id) {
+                $scope.idNotepad = id;
+            }
+            app.loadNotepads();
         });
-        app.controller('ExampleController',  function ($scope, $http) {
+        app.controller('SaveController', function ($scope, $http) {
             $scope.master = {};
-            $scope.save = function() {
+            $scope.save = function () {
                 $scope.master = angular.copy($scope.notepad);
-                //$http.post("/saveNotepad", $scope.master);
-                $http.post("/rest/w/saveNotepad", $scope.master).success(function(master, status) {
+                $http.post("/rest/w/saveNotepad", $scope.master).success(function (master, status) {
                     $scope.hello = $scope.master;
+                    app.loadNotepads();
                 });
 
             };
 
         });
+        app.controller('DropSession', function ($scope, $http) {
+            $scope.drop = function () {
+                $http.get("/rest/w/dropSession").then(function (response) {
+                    window.location.reload();
+                });
+            };
+        });
     </script>
-
-
 
 
 </head>
@@ -48,7 +58,7 @@
     <div class="navbar-header">
         <a class="navbar-brand brand_nav" href="#">Notepads</a>
 
-        <div class="col-md-4">
+        <div class="col-md-4" ng-controller="DropSession">
             <div class="input-group">
                 <input type="text" class="form-control search_con" placeholder="Search for...">
 						<span class="input-group-btn">
@@ -57,7 +67,7 @@
             </div>
         </div>
         <label class="usr_nav">UserName</label>
-        <button type="button" class="btn btn-primary btn_exit">Exit</button>
+        <button type="button" class="btn btn-primary btn_exit" ng-click="drop()">Exit</button>
     </div>
 </nav>
 
@@ -67,17 +77,20 @@
      aria-hidden="true">
 
     <div class="modal-dialog modal-sm">
-        <div class="modal-content"  ng-controller="ExampleController">
+        <div class="modal-content" ng-controller="SaveController">
             <h4 class="modal-title add_notepad_label">Add Notepad</h4>
-                <form novalidate  class="simple-form">
-                    <div class="col-xs-12">
-                        <input class="form-control add_notepad_label_inp" type="text" ng-model="notepad.name">
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-primary add_notepad_but" ng-click="save()"></span>Save</button>
-                        <button type="button" class="btn btn-default del_notepad_but" data-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
+
+            <form novalidate class="simple-form">
+                <div class="col-xs-12">
+                    <input class="form-control add_notepad_label_inp" type="text" ng-model="notepad.name">
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary add_notepad_but" ng-click="save()"
+                            data-dismiss="modal"></span>Save
+                    </button>
+                    <button type="button" class="btn btn-default del_notepad_but" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -107,14 +120,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 notepads">
-            <div class="list-group" ng-controller="customersCtrl">
-                <a href = "#" class = "list-group-item  notepad_h active">
-                    <h4 class = "list-group-item-heading ">
+            <div class="list-group" ng-controller="GetDataController">
+                <a href="#" class="list-group-item  notepad_h active">
+                    <h4 class="list-group-item-heading ">
                         Notepads:
                     </h4>
                 </a>
-                <a href = "#" class="list-group-item notepad_h" ng-repeat="x in notepads">
-                    <h4 class = "list-group-item-heading">
+                <a href="#" class="list-group-item notepad_h" ng-repeat="x in notepads">
+                    <h4 ng-click="app.loadRecords({{x.id}})" class="list-group-item-heading">
                         {{x.name}}
 
                     </h4>
@@ -170,32 +183,3 @@
 </div>
 </body>
 </html>
-<!--
-<html>
-<head>
-    <script type="text/javascript" src="js/angular.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-
-
-</head>
-<body>
-<div ng-app="myApp" ng-controller="customersCtrl">
-    <ul>
-        <li ng-repeat="x in users">
-            <a href="#">{{x.id+" "+x.name}}</a>
-        </li>
-    </ul>
-</div>
-
-<script>
-    var app = angular.module('myApp', []);
-    app.controller('customersCtrl', function($scope, $http) {
-        $http.get("/rest/w/getNotepads/22").then(function(response) {
-            $scope.users = response.data;
-        });
-    });
-</script>
-
-</body>
-</html>
--->
