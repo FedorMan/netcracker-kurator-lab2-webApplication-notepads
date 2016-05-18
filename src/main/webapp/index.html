@@ -25,10 +25,13 @@
                     $scope.notepads = response.data;
                 });
             }
-            $scope.setIdNotepad = function (id) {
-                $scope.idNotepad = id;
+            app.loadRecords=function(){
+                $http.get("/rest/w/loadRecords").then(function (response) {
+                    $scope.records = response.data;
+                });
             }
             app.loadNotepads();
+            //app.loadRecords();
         });
         app.controller('SaveController', function ($scope, $http) {
             $scope.master = {};
@@ -55,10 +58,10 @@
 </head>
 <body ng-app="myApp">
 <nav class="navbar navbar-default">
-    <div class="navbar-header">
+    <div class="navbar-header" ng-controller="DropSession">
         <a class="navbar-brand brand_nav" href="#">Notepads</a>
 
-        <div class="col-md-4" ng-controller="DropSession">
+        <div class="col-md-4" >
             <div class="input-group">
                 <input type="text" class="form-control search_con" placeholder="Search for...">
 						<span class="input-group-btn">
@@ -117,19 +120,18 @@
 </div>
 
 
-<div class="container">
+<div class="container" ng-controller="GetDataController">
     <div class="row">
         <div class="col-md-3 notepads">
-            <div class="list-group" ng-controller="GetDataController">
+            <div class="list-group">
                 <a href="#" class="list-group-item  notepad_h active">
                     <h4 class="list-group-item-heading ">
                         Notepads:
                     </h4>
                 </a>
-                <a href="#" class="list-group-item notepad_h" ng-repeat="x in notepads">
-                    <h4 ng-click="app.loadRecords({{x.id}})" class="list-group-item-heading">
+                <a href class="list-group-item notepad_h" ng-repeat="x in notepads">
+                    <h4 ng-click="app.loadRecords()" class="list-group-item-heading">
                         {{x.name}}
-
                     </h4>
                 </a>
             </div>
@@ -144,16 +146,8 @@
         <div class="col-md-3 records">
             <div class="list-group">
                 <a href="#" class="list-group-item active">Record name</a>
-                <a href="#" class="list-group-item record_h">Record name</a>
-                <a href="#" class="list-group-item record_h">Record name</a>
-                <a href="#" class="list-group-item record_h">Record name</a>
-                <a href="#" class="list-group-item record_h">Record name</a>
-                <a href="#" class="list-group-item record_h">Record name</a>
-                <a href="#" class="list-group-item record_h">Record name</a>
-                <a href="#" class="list-group-item record_h">Record name</a>
-                <a href="#" class="list-group-item record_h">Record name</a>
-                <a href="#" class="list-group-item record_h">Record name</a>
-                <a href="#" class="list-group-item record_h">Record name</a>
+                <a href="#" class="list-group-item record_h" ng-repeat="h in records">{{h.name}}</a>
+
             </div>
             <button data-toggle="modal" data-target="#smallModal_record" type="button"
                     class="btn btn-success add_but_not"><span class="glyphicon glyphicon-plus"></span> Add
