@@ -74,10 +74,11 @@ public class WebController {
     }
 
     @GET
-    @Path(value="/getRecordings")
+    @Path(value="/loadRecords")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getRecordings(String idnotepad) {
-        LinkedList<Entity> recordings=controller.listOnQuery("select * from recording where id_notepad="+Integer.parseInt(idnotepad), Record.class);
+    public String getRecordings(String idNotepad) {
+        System.out.println("loadRecords");
+        LinkedList<Entity> recordings=controller.listOnQuery("select * from recording where id_notepad="+Integer.parseInt(idNotepad), Record.class);
         String json = gson.toJson(recordings);
         return json;
     }
