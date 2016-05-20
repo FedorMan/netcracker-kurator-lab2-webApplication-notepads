@@ -63,6 +63,17 @@ public class WebController {
     }
 
     @POST
+    @Path(value = "/saveRecord")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void saveRecord(String content) {
+        System.out.println("Save Record");
+        Record record = gson.fromJson(content, Record.class);
+        HttpSession session = request.getSession(false);
+        //record.setIdNotepad(Integer.parseInt(idNotepad));
+        controller.save(record);
+    }
+
+    @POST
     @Path(value = "/login")
     public Response getUser(@FormParam("username") String username, @FormParam("password") String password) throws ServletException, IOException {
         LinkedList<Entity> entites = controller.listOnQuery("select * from users where login=" + "'" + username + "'" + " and password=" + "'" + password + "'", User.class);
@@ -93,6 +104,17 @@ public class WebController {
         LinkedList<Entity> recordings = controller.listOnQuery("select * from recording where id_notepad=" + Integer.parseInt(idNotepad), Record.class);
         String json = gson.toJson(recordings);
         return json;
+    }
+
+    @GET
+    @Path(value = "/deleteNotepad")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void deleteNotepad(@QueryParam("idNotepad")String idNotepad) {
+        //System.out.println("loadRecords from: " + idNotepad);
+//        LinkedList<Entity> recordings = controller.listOnQuery("select * from recording where id_notepad=" + Integer.parseInt(idNotepad), Record.class);
+//        String json = gson.toJson(recordings);
+//        return json;
+        controller.delete(Integer.parseInt(idNotepad),Notepad.class);
     }
 
     @GET

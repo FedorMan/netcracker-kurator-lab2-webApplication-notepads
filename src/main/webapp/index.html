@@ -19,16 +19,15 @@
 
     <script>
         var app = angular.module('myApp', []);
-        app.controller('GetDataController', function ($scope, $http) {
-            app.loadNotepads = function () {
+        app.controller('Controller', function ($scope, $http) {
+            $scope.loadNotepads = function () {
                 $http.get("/rest/w/getNotepads").then(function (response) {
                     $scope.notepads = response.data;
                 });
 
             }
             $scope.loadRecords = function (num) {
-                if (!num)
-                {
+                if (!num) {
                     $scope.records = [];
                     $scope.idNotepad = -1;
                 } else {
@@ -38,22 +37,32 @@
                     });
                 }
             }
-            app.loadNotepads();
-            //app.loadRecords('18');
-        });
-        app.controller('SaveController', function ($scope, $http) {
+
+            $scope.deleteNotepad = function () {
+                $http.get("/rest/w/deleteNotepad?idNotepad=" + $scope.idNotepad).then(function (response) {
+                });
+                $scope.loadNotepads();
+            }
+
             $scope.master = {};
             $scope.save = function () {
                 $scope.master = angular.copy($scope.notepad);
                 $http.post("/rest/w/saveNotepad", $scope.master).success(function (master, status) {
                     $scope.hello = $scope.master;
-                    app.loadNotepads();
+                    $scope.loadNotepads();
                 });
 
             };
 
-        });
-        app.controller('SessionController', function ($scope, $http) {
+            $scope.record = {};
+            $scope.saveRecord = function () {
+                $scope.recorForServ = angular.copy($scope.record);
+                $scope.recorForServ.idNotepad = $scope.idNotepad;
+                $http.post("/rest/w/saveRecord", $scope.recorForServ).success(function (master, status) {
+                    $scope.hello = $scope.recorForServ;
+                    $scope.loadRecords();
+                });
+            };
             $scope.drop = function () {
                 $http.get("/rest/w/dropSession").then(function (response) {
                     window.location.reload();
@@ -64,14 +73,18 @@
                 $scope.username = response.data;
             });
 
+
+            $scope.loadNotepads();
+            //app.loadRecords('18');
         });
+
     </script>
 
 
 </head>
-<body ng-app="myApp">
+<body ng-app="myApp" ng-controller="Controller">
 <nav class="navbar navbar-default">
-    <div class="navbar-header" ng-controller="SessionController">
+    <div class="navbar-header">
         <a class="navbar-brand brand_nav" href="#">Notepads</a>
 
         <div class="col-md-4">
@@ -93,7 +106,7 @@
      aria-hidden="true">
 
     <div class="modal-dialog modal-sm">
-        <div class="modal-content" ng-controller="SaveController">
+        <div class="modal-content">
             <h4 class="modal-title add_notepad_label">Add Notepad</h4>
 
             <form novalidate class="simple-form">
@@ -120,12 +133,14 @@
             <h4 class="modal-title add_record_label" id="myModalLabel">Add Record</h4>
 
             <div class="col-xs-12">
-                <input class="form-control add_record_label_inp" type="text">
+                <input class="form-control add_record_label_inp" type="text" ng-model="record.name">
                 <textarea class="form-control add_textar_record" id="redex" maxlength="100" rows="6"
-                          cols="40"></textarea>
+                          cols="40" ng-model="record.text"></textarea>
             </div>
             <div>
-                <button type="button" class="btn btn-primary add_record_but">Save</button>
+                <button type="button" class="btn btn-primary add_record_but" ng-click="saveRecord()"
+                        data-dismiss="modal">Save
+                </button>
                 <button type="button" class="btn btn-default del_record_but" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -133,7 +148,7 @@
 </div>
 
 
-<div class="container" ng-controller="GetDataController">
+<div class="container">
     <div class="row">
         <div class="col-md-3 notepads">
             <div class="list-group">
@@ -152,7 +167,8 @@
             <button data-toggle="modal" data-target="#smallModal_notepad" type="button"
                     class="btn btn-primary add_but_not"><span class="glyphicon glyphicon-plus"></span> Add
             </button>
-            <button type="button" class="btn btn-primary del_but_not"><span class="glyphicon glyphicon-remove"></span>
+            <button type="button" class="btn btn-primary del_but_not" ng-click="deleteNotepad()"><span
+                    class="glyphicon glyphicon-remove"></span>
                 Delete
             </button>
         </div>
