@@ -24,14 +24,22 @@
                 $http.get("/rest/w/getNotepads").then(function (response) {
                     $scope.notepads = response.data;
                 });
+
             }
-            app.loadRecords=function(){
-                $http.get("/rest/w/loadRecords").then(function (response) {
-                    $scope.records = response.data;
-                });
+            $scope.loadRecords = function (num) {
+                if (!num)
+                {
+                    $scope.records = [];
+                    $scope.idNotepad = -1;
+                } else {
+                    $scope.idNotepad = num;
+                    $http.get("/rest/w/loadRecords?idNotepad=" + $scope.idNotepad).then(function (response) {
+                        $scope.records = response.data;
+                    });
+                }
             }
             app.loadNotepads();
-            //app.loadRecords();
+            //app.loadRecords('18');
         });
         app.controller('SaveController', function ($scope, $http) {
             $scope.master = {};
@@ -45,12 +53,17 @@
             };
 
         });
-        app.controller('DropSession', function ($scope, $http) {
+        app.controller('SessionController', function ($scope, $http) {
             $scope.drop = function () {
                 $http.get("/rest/w/dropSession").then(function (response) {
                     window.location.reload();
                 });
             };
+
+            $http.get("/rest/w/getUsername").then(function (response) {
+                $scope.username = response.data;
+            });
+
         });
     </script>
 
@@ -58,10 +71,10 @@
 </head>
 <body ng-app="myApp">
 <nav class="navbar navbar-default">
-    <div class="navbar-header" ng-controller="DropSession">
+    <div class="navbar-header" ng-controller="SessionController">
         <a class="navbar-brand brand_nav" href="#">Notepads</a>
 
-        <div class="col-md-4" >
+        <div class="col-md-4">
             <div class="input-group">
                 <input type="text" class="form-control search_con" placeholder="Search for...">
 						<span class="input-group-btn">
@@ -69,7 +82,7 @@
 						</span>
             </div>
         </div>
-        <label class="usr_nav">UserName</label>
+        <label class="usr_nav">{{username}}</label>
         <button type="button" class="btn btn-primary btn_exit" ng-click="drop()">Exit</button>
     </div>
 </nav>
@@ -124,13 +137,13 @@
     <div class="row">
         <div class="col-md-3 notepads">
             <div class="list-group">
-                <a href="#" class="list-group-item  notepad_h active">
+                <a class="list-group-item  notepad_h active">
                     <h4 class="list-group-item-heading ">
                         Notepads:
                     </h4>
                 </a>
-                <a href class="list-group-item notepad_h" ng-repeat="x in notepads">
-                    <h4 ng-click="app.loadRecords()" class="list-group-item-heading">
+                <a ng-click="loadRecords(x.id)" class="list-group-item notepad_h" ng-repeat="x in notepads">
+                    <h4 class="list-group-item-heading">
                         {{x.name}}
                     </h4>
                 </a>
