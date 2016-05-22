@@ -30,16 +30,6 @@ public class WebController {
     @Context
     private HttpServletResponse response;
 
-
-
-
-
-
-
-
-
-
-
     @GET
     @Path(value = "/getNotepads")
     @Produces(MediaType.APPLICATION_JSON)
@@ -69,8 +59,17 @@ public class WebController {
         System.out.println("Save Record");
         Record record = gson.fromJson(content, Record.class);
         HttpSession session = request.getSession(false);
-        //record.setIdNotepad(Integer.parseInt(idNotepad));
         controller.save(record);
+    }
+
+    @POST
+    @Path(value = "/refactorRecord")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void refactorRecord(String content) {
+        System.out.println("Refactor Record");
+        Record record = gson.fromJson(content, Record.class);
+        HttpSession session = request.getSession(false);
+        controller.correct(record);
     }
 
     @POST
@@ -110,10 +109,6 @@ public class WebController {
     @Path(value = "/deleteNotepad")
     @Produces(MediaType.APPLICATION_JSON)
     public void deleteNotepad(@QueryParam("idNotepad")String idNotepad) {
-        //System.out.println("loadRecords from: " + idNotepad);
-//        LinkedList<Entity> recordings = controller.listOnQuery("select * from recording where id_notepad=" + Integer.parseInt(idNotepad), Record.class);
-//        String json = gson.toJson(recordings);
-//        return json;
         controller.delete(Integer.parseInt(idNotepad),Notepad.class);
     }
 
@@ -123,8 +118,14 @@ public class WebController {
     public String getUsername() {
         HttpSession session = request.getSession(false);
         String json = gson.toJson(session.getAttribute("username"));
-        //System.out.println(session.getAttribute("username"));
         return json;
+    }
+
+    @GET
+    @Path(value = "/deleteRecord")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void deleteRecord(@QueryParam("idRecord")String idRecord) {
+        controller.delete(Integer.parseInt(idRecord),Record.class);
     }
 }
 //singleton
