@@ -99,7 +99,6 @@ public class WebController {
     @Path(value = "/loadRecords")
     @Produces(MediaType.APPLICATION_JSON)
     public String loadRecords(@QueryParam("idNotepad")String idNotepad) {
-        //System.out.println("loadRecords from: " + idNotepad);
         LinkedList<Entity> recordings = controller.listOnQuery("select * from recording where id_notepad=" + Integer.parseInt(idNotepad), Record.class);
         String json = gson.toJson(recordings);
         return json;
@@ -126,6 +125,18 @@ public class WebController {
     @Produces(MediaType.APPLICATION_JSON)
     public void deleteRecord(@QueryParam("idRecord")String idRecord) {
         controller.delete(Integer.parseInt(idRecord),Record.class);
+    }
+
+    @GET
+    @Path(value = "/searhNotepads")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String searhNotepads(@QueryParam("nameNotepads")String nameNotepads) {
+        HttpSession session = request.getSession(false);
+        System.out.println(session.getAttribute("userId"));
+        LinkedList<Entity> notepads = controller.listOnQuery("select * from notepads where id_user=" + (Integer) (session.getAttribute("userId"))
+                + " And "+"name LIKE '" +nameNotepads + "%"+"'", Notepad.class);
+        String json = gson.toJson(notepads);
+        return json;
     }
 }
 //singleton

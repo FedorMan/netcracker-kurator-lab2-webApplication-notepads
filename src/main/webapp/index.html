@@ -25,7 +25,7 @@
                     $scope.notepads = response.data;
                 });
 
-            }
+            };
             $scope.loadRecords = function (num) {
                 if (!num) {
                     $scope.records = [];
@@ -36,13 +36,13 @@
                         $scope.records = response.data;
                     });
                 }
-            }
+            };
 
             $scope.deleteNotepad = function () {
                 $http.get("/rest/w/deleteNotepad?idNotepad=" + $scope.idNotepad).then(function (response) {
                 });
                 $scope.loadNotepads();
-            }
+            };
 
             $scope.master = {};
             $scope.saveNotepad = function () {
@@ -77,13 +77,13 @@
             $scope.loadRecord = function (num,rec) {
                 $scope.idRecord = num;
                 $scope.viewRecord=rec;
-            }
+            };
 
             $scope.deleteRecord = function () {
                 $http.get("/rest/w/deleteRecord?idRecord=" + $scope.idRecord).then(function (response) {
                 });
                 $scope.loadRecords();
-            }
+            };
 
             $scope.drop = function () {
                 $http.get("/rest/w/dropSession").then(function (response) {
@@ -94,6 +94,13 @@
             $http.get("/rest/w/getUsername").then(function (response) {
                 $scope.username = response.data;
             });
+
+            $scope.searchNotepads = function (name) {
+                    $scope.nameNotepad = name;
+                    $http.get("/rest/w/searhNotepads?nameNotepads=" + $scope.nameNotepad).then(function (response) {
+                        $scope.notepads = response.data;
+                    });
+            };
 
 
             $scope.loadNotepads();
@@ -110,9 +117,9 @@
 
         <div class="col-md-4">
             <div class="input-group">
-                <input type="text" class="form-control search_con" placeholder="Search for...">
+                <input type="text" class="form-control search_con" placeholder="Search for..." ng-model="name">
 						<span class="input-group-btn">
-							<button class="btn btn-default search_con" type="button">Search!</button>
+							<button class="btn btn-default search_con" type="button" ng-click="searchNotepads(name)">Search!</button>
 						</span>
             </div>
         </div>
